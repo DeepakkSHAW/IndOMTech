@@ -1,0 +1,80 @@
+﻿@page "/contacts"
+@using IndOMTech.Shared
+@using IndOMTech.Shared.Models
+@using IndOMTech.Client.ViewModels
+
+@*//@inject HttpClient Http*@
+
+@*@inject ContactUsViewModel _contactusMV*@
+@inject IContactUsViewModel _conatctViewModel
+
+<PageTitle>Contact Us</PageTitle>
+
+<h1>We are here to help..</h1>
+
+<p>Do you know your exact requirements already? Or do you simply want to talk through your requirements</p>
+<div>Message @_conatctViewModel.Message</div>
+
+@if (contactUs == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+@*        <tbody>
+            @foreach (var contact in contactUs)
+            {
+                <tr>
+                    <td>@contact.Name</td>
+                    <td>@contact.LastName</td>
+                    <td>@contact.EMail</td>
+                    <td>@contact.Message</td>
+                    <td>@contact.InDate</td>
+                </tr>
+            }
+        </tbody>*@
+        <tbody>
+                <tr>
+                <td>@_conatctViewModel.Name</td>
+                <td>@_conatctViewModel.LastName</td>
+                <td>@_conatctViewModel.Email</td>
+                <td>@_conatctViewModel.Message</td>
+                <td>@DateTime.Now</td>
+                </tr>
+        </tbody>
+    </table>
+}
+
+@code {
+    private ContactUs[]? contactUs;
+
+    //protected override async Task OnInitializedAsync() => await _conatctViewModel.GetContact();
+
+    protected override async Task OnInitializedAsync()
+    {
+        //contactUs = await Http.GetFromJsonAsync<ContactUs[]>("ContactUs");
+        try
+        {
+            await _conatctViewModel.GetContact();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+
+            throw;
+        }
+        //await Task.Delay(1);
+        //await _conatctViewModel.GetContact();
+
+    }
+}

@@ -1,0 +1,56 @@
+﻿@page "/shawcontactus"
+@using IndOMTech.Shared
+@using IndOMTech.Shared.Models
+@using IndOMTech.Client.ViewModels
+
+
+@inject IContactUsViewModel _conatctViewModel
+
+<PageTitle>Contact Us - Show Single Contact</PageTitle>
+
+<h1>We are here to help..</h1>
+
+<p>Do you know your exact requirements already? Or do you simply want to talk through your requirements</p>
+<div>Message @_conatctViewModel.Message</div>
+
+@if (_conatctViewModel == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<div class="col-12">
+        <input type="text" @bind-value="_conatctViewModel.Name" class="form-control" placeholder="first name">
+        <br/>
+        <input type="text" @bind-value="_conatctViewModel.LastName" class="form-control" placeholder="last name">
+        <br/>
+        <input type="text" @bind-value="_conatctViewModel.Email" class="form-control" placeholder="email address">
+        <br/>
+@*        <button class="btn btn-primary" @onclick="_conatctViewModel.Query">Update Profile</button>
+        <span>&nbsp;&nbsp;</span>@_conatctViewModel.Message*@
+    </div>
+}
+
+@code {
+    private ContactUs[]? contactUs;
+
+    //protected override async Task OnInitializedAsync() => await _conatctViewModel.GetContact();
+
+    protected override async Task OnInitializedAsync()
+    {
+        //contactUs = await Http.GetFromJsonAsync<ContactUs[]>("ContactUs");
+        try
+        {
+            await _conatctViewModel.Get1stContact();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+
+            throw;
+        }
+        //await Task.Delay(1);
+        //await _conatctViewModel.GetContact();
+
+    }
+}

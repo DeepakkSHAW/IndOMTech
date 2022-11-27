@@ -1,0 +1,8 @@
+PM> dotnet ef migrations add createdb
+PM> dotnet ef database update
+
+--------SQL----------
+var sql = @"
+select * from TUsers
+INSERT into TUsers (Name, LastName,Email, Subject) VALUES ('Divs', 'Shaw', 'div.shaw@gmail.com','developing the application')
+INSERT into TUsers (Name, LastName,Email, Subject) VALUES ('Jag', 'Shaw', 'Jag.shaw@gmail.com','developing the application')";
